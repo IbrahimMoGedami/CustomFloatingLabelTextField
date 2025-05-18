@@ -20,27 +20,25 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 50) {
-                FloatingBorderTextField(title: "First Name", text: $firstNameTextFiled)
+                FloatingLabelTextField(title: "First Name", text: $firstNameTextFiled)
                     .validation(NameValidator())
                     .required(true)
                 
-                FloatingBorderTextField(title: "Last Name", text: $lastNameTextFiled)
+                FloatingLabelTextField(title: "Last Name", text: $lastNameTextFiled)
                     .validation(NameValidator())
                     .required(false)
                 
-                FloatingBorderTextField(title: "Email", text: $emailTextFiled)
+                FloatingLabelTextField(title: "Email", text: $emailTextFiled)
                     .validation(ValidationFactory.email)
                 
-                FloatingBorderTextField(
+                FloatingLabelTextField(
                     title: "Password",
                     text: $password,
-                    isSecureField: true
+                    style: .secure
                 )
                 .validation(MyPasswordValidator())
                 
-                FloatingBorderTextField(
-                    title: "Country",
-                    text: $country)
+                FloatingLabelTextField(title: "Country", text: $country)
                 .textFieldEnabled(false)
                 .rightView {
                     Menu {
@@ -52,11 +50,7 @@ struct ContentView: View {
                     }
                 }
                 
-                FloatingBorderTextField(
-                    title: "Notes",
-                    text: $notes,
-                    isMultiline: true
-                )
+                FloatingLabelTextField(title: "Notes", text: $notes, style: .multiline)
             }
             .padding()
         }

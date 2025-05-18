@@ -11,7 +11,7 @@ public enum FieldStyle {
     
 }
 
-public struct FloatingBorderTextField: View {
+public struct FloatingLabelTextField: View {
     
     let title: String
     @Binding var text: String
@@ -168,15 +168,15 @@ public struct FloatingBorderTextField: View {
     
 }
 
-public extension FloatingBorderTextField {
+public extension FloatingLabelTextField {
     
-    func validation(_ validator: TextFieldValidator) -> FloatingBorderTextField {
+    func validation(_ validator: TextFieldValidator) -> FloatingLabelTextField {
         var view = self
         view._validator = State(initialValue: validator)
         return view
     }
     
-    func required(_ value: Bool) -> FloatingBorderTextField {
+    func required(_ value: Bool) -> FloatingLabelTextField {
         var view = self
         view.isRequired = value
         return view
@@ -188,7 +188,7 @@ public extension FloatingBorderTextField {
         return view
     }
     
-    func textFieldEnabled(_ isEnabled: Bool) -> FloatingBorderTextField {
+    func textFieldEnabled(_ isEnabled: Bool) -> FloatingLabelTextField {
         var view = self
         view.isTextFieldEnabled = isEnabled
         return view

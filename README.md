@@ -1,4 +1,4 @@
-# FloatingBorderTextField
+# FloatingLabelTextField
 
 `FloatingBorderTextField` is a customizable SwiftUI view that provides a floating label text field with support for validation, secure input, multiline input, and custom right views. It includes customizable error handling and the ability to display validation messages.
 
@@ -18,7 +18,7 @@
 ### Basic Example
 
 ```swift
-FloatingBorderTextField(title: "First Name", text: $firstNameTextField)
+FloatingLabelTextField(title: "First Name", text: $firstNameTextField)
     .validation(NameValidator())
     .required()
 ```
@@ -26,20 +26,20 @@ FloatingBorderTextField(title: "First Name", text: $firstNameTextField)
 ### Password Field Example
 
 ```swift
-FloatingBorderTextField(title: "Password", text: $password, isSecureField: true)
+FloatingLabelTextField(title: "Password", text: $password, isSecureField: true)
     .validation(MyPasswordValidator())
 ```
 
 ### Multiline Text Field Example
 
 ```swift
-FloatingBorderTextField(title: "Notes", text: $notes, isMultiline: true)
+FloatingLabelTextField(title: "Notes", text: $notes, isMultiline: true)
 ```
 
 ### Adding a Custom Right View (e.g., Dropdown Menu)
 
 ```swift
-FloatingBorderTextField(title: "Country", text: $country)
+FloatingLabelTextField(title: "Country", text: $country)
     .textFieldEnabled(false)
     .rightView {
         Menu {
@@ -57,7 +57,7 @@ FloatingBorderTextField(title: "Country", text: $country)
 You can apply custom validation to the text field using the `.validation()` modifier.
 
 ```swift
-FloatingBorderTextField(title: "Email", text: $emailTextField)
+FloatingLabelTextField(title: "Email", text: $emailTextField)
     .validation(ValidationFactory.email)
 ```
 
@@ -66,7 +66,7 @@ FloatingBorderTextField(title: "Email", text: $emailTextField)
 To mark a field as required, use the `.required()` modifier.
 
 ```swift
-FloatingBorderTextField(title: "First Name", text: $firstNameTextField)
+FloatingLabelTextField(title: "First Name", text: $firstNameTextField)
     .required()
 ```
 
@@ -81,4 +81,4 @@ Validators ensure the entered text meets certain criteria. You can create custom
 
 ## Installation
 
-To use `FloatingBorderTextField` in your project, simply add the SwiftUI view and validator logic to your codebase. No external dependencies are required.
+To use `FloatingLabelTextField` in your project, simply add the SwiftUI view and validator logic to your codebase. No external dependencies are required.
