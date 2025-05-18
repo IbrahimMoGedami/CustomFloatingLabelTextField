@@ -1,6 +1,6 @@
 # FloatingLabelTextField
 
-`FloatingBorderTextField` is a customizable SwiftUI view that provides a floating label text field with support for validation, secure input, multiline input, and custom right views. It includes customizable error handling and the ability to display validation messages.
+`FloatingLabelTextField` is a customizable SwiftUI view that provides a floating label text field with support for validation, secure input, multiline input, and custom right views. It includes customizable error handling and the ability to display validation messages.
 
 ## Features
 
