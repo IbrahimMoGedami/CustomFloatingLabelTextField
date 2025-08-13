@@ -21,8 +21,6 @@ public struct FloatingLabelTextField: View {
     @FocusState private var isTyping: Bool
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-//    private var isSecureField: Bool = false
-//    private var isMultiline: Bool = false
     private var isTextFieldEnabled: Bool = true
     private var isRequired: Bool = false
     @State private var isSecure: Bool = true
@@ -35,15 +33,11 @@ public struct FloatingLabelTextField: View {
     public init(title: String,
                 text: Binding<String>,
                 style: FieldStyle = .normal,
-//                isSecureField: Bool = false,
-//                isMultiline: Bool = false,
                 isTextFieldEnabled: Bool = true,
                 defaultColor: Color = Color(hexString: "#1E4D80")) {
         self.title = title
         self._text = text
         self.style = style
-//        self.isSecureField = isSecureField
-//        self.isMultiline = isMultiline
         self.isTextFieldEnabled = isTextFieldEnabled
         self.mainColor = defaultColor
     }
@@ -147,13 +141,6 @@ public struct FloatingLabelTextField: View {
     }
     
     private func validate() {
-//        if text.isEmpty {
-//            // If the field is empty, reset the error (or keep it empty if required is false)
-//            errorMessage = nil
-//        } else if let validator = validator {
-//            errorMessage = validator.validate(text)
-//        }
-        
         if isRequired && text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             errorMessage = "\(title) is required"
             return
@@ -203,56 +190,3 @@ public extension View {
     }
     
 }
-
-
-//            ZStack(alignment: .topLeading) {
-//                ZStack(alignment: .leading) {
-//                    HStack(spacing: 0) {
-//                        inputField
-//                            .padding(.leading, 12)
-//                            .frame(minHeight: isMultiline ? 65 : 50)
-//                            .focused($isTyping)
-//                            .disabled(!isEnabled)
-//                            .disabled(!isTextFieldEnabled)
-//
-//                        Spacer(minLength: 0)
-//
-//                        if isSecureField {
-//                            Button {
-//                                isSecure.toggle()
-//                            } label: {
-//                                Image(systemName: isSecure ? "eye.slash" : "eye")
-//                                    .foregroundStyle(.gray)
-//                            }
-//                            .padding(.trailing, 12)
-//                        } else if let rightView = rightView {
-//                            rightView
-//                                .padding(.trailing, 12)
-//                        }
-//                    }
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 14)
-//                            .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
-//                            .background(isEnabled ? .white : .gray.opacity(0.05))
-//                    )
-//
-//                    Text(title)
-//                        .padding(.horizontal, 5)
-//                        .background(.white.opacity(isTyping || !text.isEmpty ? 1 : 0))
-//                        .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
-//                        .padding(.leading)
-//                        .offset(y: isTyping || !text.isEmpty ? -27 : 0)
-//                        .onTapGesture {
-//                            isTyping = true
-//                        }
-//                        .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty)
-//                }
-//                //            .animation(.linear(duration: 0.1), value: isTyping)
-//
-//                if isRequired {
-//                    Text("*")
-//                        .foregroundStyle(.red)
-//                        .padding(.leading, -10)
-//                        .padding(.top, -10)
-//                }
-//            }

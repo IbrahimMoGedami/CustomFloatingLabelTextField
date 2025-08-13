@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  FloatingBorderTextFieldExample
+//  CustomTextField
 //
-//  Created by Ibrahim Gedami on 26/04/2025.
+//  Created by Ibrahim Mo Gedami on 13/08/2025.
 //
 
 import SwiftUI
@@ -57,7 +57,6 @@ struct ContentView: View {
     }
     
 }
-
 #Preview {
     ContentView()
 }
