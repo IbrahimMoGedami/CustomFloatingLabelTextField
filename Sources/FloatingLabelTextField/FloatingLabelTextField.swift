@@ -25,9 +25,10 @@ public struct FloatingLabelTextField: View {
     private var isRequired: Bool = false
     @State private var isSecure: Bool = true
     private let style: FieldStyle
-
+    private var returnKeyType: UIReturnKeyType = .default
+    private var onSubmit: (() -> Void)?
+    
     @State private var rightView: AnyView?
-        
     private var mainColor: Color = Color(hexString: "#1E4D80")
     
     public init(title: String,
@@ -52,6 +53,12 @@ public struct FloatingLabelTextField: View {
                         .focused($isTyping)
                         .disabled(!isEnabled)
                         .disabled(!isTextFieldEnabled)
+                        .submitLabel(returnKeyType == .next ? .next : .return)
+                        .onSubmit {
+                            if errorMessage == nil {
+                                onSubmit?()
+                            }
+                        }
                     
                     Spacer(minLength: 0)
                     
@@ -104,22 +111,17 @@ public struct FloatingLabelTextField: View {
             }
         }
         .onAppear {
-            // Run validation on view load if text has a value or the user is already typing
             if !text.isEmpty || isTyping {
                 validate()
             }
         }
         .onChange(of: text) { _, _ in
-            // Run validation whenever the text changes (e.g., typing or programmatic update),
-            // but only if the user is typing or the text is not empty
             isTyping = true
             if !text.isEmpty || isTyping {
                 validate()
             }
         }
         .onChange(of: isTyping) { _, newValue in
-            // Run validation when typing starts/stops,
-            // and only if typing or the field already has a value
             if newValue || !text.isEmpty {
                 validate()
             }
@@ -178,6 +180,18 @@ public extension FloatingLabelTextField {
     func textFieldEnabled(_ isEnabled: Bool) -> FloatingLabelTextField {
         var view = self
         view.isTextFieldEnabled = isEnabled
+        return view
+    }
+    
+    func returnKeyType(_ type: UIReturnKeyType) -> FloatingLabelTextField {
+        var view = self
+        view.returnKeyType = type
+        return view
+    }
+    
+    func onSubmit(_ action: @escaping () -> Void) -> FloatingLabelTextField {
+        var view = self
+        view.onSubmit = action
         return view
     }
     
