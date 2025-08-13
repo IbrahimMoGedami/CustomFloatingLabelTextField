@@ -9,90 +9,115 @@ import SwiftUI
 import FloatingBorderTextField
 
 struct ContentView: View {
-    
     enum Field: Hashable {
-        case firstName, lastName, email, password, country, notes
+        case firstName, lastName, email, password, phone, notes
     }
     
-    @State private var firstNameTextFiled: String = "12345"
-    @State private var lastNameTextFiled: String = "12345"
-    @State private var emailTextFiled: String = ""
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
+    @State private var phone: String = ""
     @State private var notes: String = ""
-    @State private var country: String = ""
+    @State private var rememberMe: Bool = false
     
     @FocusState private var focusedField: Field?
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 50) {
-                FloatingLabelTextField(title: "First Name", text: $firstNameTextFiled)
-                    .validation(ValidationFactory.name)
+            VStack(spacing: 20) {
+                // Form title
+                Text("Registration Form")
+                    .font(.title)
+                    .padding(.bottom, 20)
+                
+                // First Name
+                FloatingLabelTextField(title: "First Name", text: $firstName, style: .normal)
+                    .validation(ValidationFactory.name())
                     .required(true)
                     .returnKeyType(.next)
-                    .onSubmit {
-                        if firstNameTextFiled.isEmpty || NameValidator().validate(firstNameTextFiled) == nil {
-                            focusedField = .lastName
-                        }
+                    .onSubmit { focusedField = .lastName }
+                    .leftView {
+                        Image(systemName: "person")
+                            .foregroundColor(.gray)
                     }
                     .focused($focusedField, equals: .firstName)
+                    .autocapitalization(.words)
                 
-                FloatingLabelTextField(title: "Last Name", text: $lastNameTextFiled)
-                    .validation(ValidationFactory.name)
-                    .required(false)
+                // Last Name
+                FloatingLabelTextField(title: "Last Name", text: $lastName, style: .normal)
+                    .validation(ValidationFactory.name())
                     .returnKeyType(.next)
-                    .onSubmit {
-                        if lastNameTextFiled.isEmpty || NameValidator().validate(lastNameTextFiled) == nil {
-                            focusedField = .email
-                        }
-                    }
+                    .onSubmit { focusedField = .email }
                     .focused($focusedField, equals: .lastName)
+                    .autocapitalization(.words)
                 
-                FloatingLabelTextField(title: "Email", text: $emailTextFiled)
-                    .validation(ValidationFactory.email)
+                // Email
+                FloatingLabelTextField(title: "Email", text: $email, style: .email)
+                    .validation(ValidationFactory.email())
+                    .required(true)
                     .returnKeyType(.next)
-                    .onSubmit {
-                        if emailTextFiled.isEmpty || EmailValidator().validate(emailTextFiled) == nil {
-                            focusedField = .password
-                        }
+                    .onSubmit { focusedField = .phone }
+                    .leftView {
+                        Image(systemName: "envelope")
+                            .foregroundColor(.gray)
                     }
                     .focused($focusedField, equals: .email)
                 
-                FloatingLabelTextField(
-                    title: "Password",
-                    text: $password,
-                    style: .secure
-                )
-                .validation(ValidationFactory.password)
-                .returnKeyType(.next)
-                .onSubmit {
-                    if password.isEmpty || MyPasswordValidator().validate(password) == nil {
-                        focusedField = .country
+                // Phone
+                FloatingLabelTextField(title: "Phone", text: $phone, style: .phone)
+                    .validation(ValidationFactory.phone())
+                    .returnKeyType(.next)
+                    .onSubmit { focusedField = .password }
+                    .leftView {
+                        Image(systemName: "phone")
+                            .foregroundColor(.gray)
                     }
-                }
-                .focused($focusedField, equals: .password)
+                    .characterLimit(15, showCount: true)
+                    .focused($focusedField, equals: .phone)
                 
-                FloatingLabelTextField(title: "Country", text: $country)
-                    .textFieldEnabled(false)
-                    .rightView {
-                        Menu {
-                            ForEach(["UAE", "Qatar", "Kuwait"], id: \.self) { item in
-                                Button(item) { country = item }
-                            }
-                        } label: {
-                            Image(systemName: "chevron.down")
-                        }
+                // Password
+                FloatingLabelTextField(title: "Password", text: $password, style: .secure)
+                    .validation(ValidationFactory.password())
+                    .required(true)
+                    .returnKeyType(.done)
+                    .onSubmit { focusedField = nil }
+                    .leftView {
+                        Image(systemName: "lock")
+                            .foregroundColor(.gray)
                     }
-                    .focused($focusedField, equals: .country)
+                    .focused($focusedField, equals: .password)
                 
+                // Notes (multiline)
                 FloatingLabelTextField(title: "Notes", text: $notes, style: .multiline)
-                    .focused($focusedField, equals: .notes)
+                    .characterLimit(200, showCount: true)
+                    .frame(height: 100)
+                
+                // Remember Me toggle
+                Toggle("Remember Me", isOn: $rememberMe)
+                    .padding(.vertical)
+                
+                // Submit Button
+                Button(action: submitForm) {
+                    Text("Submit")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 20)
             }
             .padding()
         }
         .onAppear {
             focusedField = .firstName
         }
+    }
+    
+    private func submitForm() {
+        // Handle form submission
+        print("Form submitted")
     }
     
 }
